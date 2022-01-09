@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>MAZE</title>
+    <meta name="description" content="demo: aframe-maze-component">
+    <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.13.1/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.6.0/dist/aframe-look-at-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-maze-component@0.1.24/dist/aframe-maze-component.min.js"></script>
+    <script src="https://www.audiyou.de/player/rennen-schritte-3854/"></script>
+
+
+</head>
+<body>
+<a-scene>
+    <a-assets>
+        <audio id="run" src="https://www.audiyou.de/player/rennen-schritte-3854" ></audio>
+        <img id="texture-wall" src="wall.jpg">
+        <img id="texture-floor" src="floor.png">
+        <img id="sky" src="‭sky.jpg" >
+
+        <a-box id="wall-one"
+               static-body material="src: #texture-wall"
+               depth="1" width="4" height="5"></a-box>
+
+        <a-cylinder id="cylinder"
+                    static-body color="#010123"
+                    depth="1.1" width="1.1" height="5"
+                    radius="0.5"></a-cylinder>
+    </a-assets>
+    <a-entity camera look-controls>
+        <a-cursor
+                id="cursor"
+                animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+                animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+                event-set__mouseenter="_event: mouseenter; color: springgreen"
+                event-set__mouseleave="_event: mouseleave; color: black"
+                raycaster="objects: .link"></a-cursor>
+    </a-entity>
+    <a-entity id="player"
+              camera
+              universal-controls
+              kinematic-body
+              position="-20 2 20">
+    </a-entity>
+    <a-entity id="maze"
+              maze='size: 25 25; wall: #wall-one; cap: #cylinder;open: S 0 N 1 2 4 E 5;'
+              position='10 0.5 30'></a-entity>
+
+    <a-entity light="type: ambient; color: #BBB"></a-entity>
+    <a-sky color="#ECECEC" src="#sky";
+           sound="src: #run;autoplay:true;
+           loop: true; position:false "></a-sky>
+    <a-grid id="ground" width="200" height="200" static-body material="src: #texture-wall"></a-grid>
+
+</a-scene>
+</body>
+</html>
